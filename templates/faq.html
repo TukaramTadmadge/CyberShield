@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Frequently Asked Questions</title>
+    <!-- Link to CSS in static folder -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='faq.css') }}">
+</head>
+<body>
+
+    <header>
+        <!-- Image from static folder -->
+        <img src="{{ url_for('static', filename='image/FaQ.png') }}" alt="faq">
+    </header>
+
+    <section class="faq-container">
+        <div class="faq-item">
+            <button class="faq-question">What is a phishing website?</button>
+            <div class="faq-answer">
+                <p>A phishing website is a fake website designed to steal sensitive information such as usernames, passwords, and credit card details from unsuspecting users.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">How does a phishing website work?</button>
+            <div class="faq-answer">
+                <p>Phishing websites trick users into entering personal information by mimicking trusted websites.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">What are some common signs of a phishing website?</button>
+            <div class="faq-answer">
+                <p>Look for mismatched URLs, poor grammar, suspicious requests for sensitive data, and unsecure connections.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">How can I protect myself from phishing websites?</button>
+            <div class="faq-answer">
+                <p>Use security software, double-check URLs, avoid clicking suspicious links, and never enter credentials on untrusted pages.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">What are some tools for detecting phishing websites?</button>
+            <div class="faq-answer">
+                <p>Tools like browser security extensions, antivirus software, and phishing detection websites can help you stay safe.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">What should I do if I think I have fallen victim to a phishing website?</button>
+            <div class="faq-answer">
+                <p>Immediately change your passwords, notify your bank if necessary, and report the phishing attempt to authorities or cybersecurity experts.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,17 +1,15 @@
 # importing required libraries
 from flask import Flask, request, render_template
 import numpy as np
-import pandas as pd
-from sklearn import metrics 
 import warnings
 import pickle
-warnings.filterwarnings('ignore')
 from feature import FeatureExtraction
 
+warnings.filterwarnings('ignore')
+
 # Load the Random Forest model
-file = open("C:\\Users\\i\\Desktop\\phishing\\CyberShield\\pickle\\model6.pkl", "rb")
-forest = pickle.load(file)
-file.close()
+with open("C:\\Users\\i\\Desktop\\phishing\\CyberShield\\pickle\\model6.pkl", "rb") as file:
+    forest = pickle.load(file)
 
 app = Flask(__name__)
 
@@ -23,13 +21,19 @@ def index():
         x = np.array(obj.getFeaturesList()).reshape(1, 30)
 
         y_pred = forest.predict(x)[0]
-        y_pro_phishing = forest.predict_proba(x)[0, 0]
         y_pro_non_phishing = forest.predict_proba(x)[0, 1]
 
-        pred = "It is {0:.2f}% safe to go.".format(y_pro_non_phishing * 100)
         return render_template('index.html', xx=round(y_pro_non_phishing, 2), url=url)
     
-    return render_template("index.html", xx=-1)
+    return render_template("index.html")
+
+@app.route("/contact.html")
+def contact():
+    return render_template("contact.html")
+
+@app.route("/faq.html")
+def faq():
+    return render_template("faq.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

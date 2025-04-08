@@ -1,55 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="This website is develop for identify the safety of url.">
-    <meta name="keywords" content="phishing url,phishing,cyber security,machine learning,classifier,python">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="This website identifies the safety of URLs.">
+    <meta name="keywords" content="phishing url, cyber security, machine learning, url detector">
     <meta name="author" content="VAIBHAV BICHAVE">
 
-    <!-- BootStrap -->
+    <title>Phishing Website Detector</title>
+
+    <!-- External Libraries -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        
-    <link href="static/styles.css" rel="stylesheet">
-    <title>URL detection</title>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
-    
-<div class=" container">
-    <div class="row">
-        <div class="form col-md" id="form1">
-            <h2>PHISHING URL DETECTION</h2>
-    
-            <br>
-            <form action="/" method ="post">
-                <input type="text" class="form__input" name ='url' id="url" placeholder="Enter URL" required="" />
-                <label for="url" class="form__label">URL</label>
-                <button class="button" role="button" >Check here</button>
-            </form>
-           
-    </div>
-    
-    <div class="col-md" id="form2">
-        
-        <br>
-        <h6 class = "right "><a href= {{ url }} target="_blank">{{ url }}</a></h6>
-           
-        <br>
-        <h3 id="prediction"></h3>
-        <button class="button2" id="button2" role="button" onclick="window.open('{{url}}')" target="_blank" >Still want to Continue</button>
-        <button class="button1" id="button1" role="button"  onclick="window.open('{{url}}')" target="_blank">Continue</button>
-    </div> 
-</div>
-<br>
-<p>CyberShield<br>
-    Tukaram Reddy</p>
-</div>
+    <!-- Header -->
+    <header>
+        <nav>
+            <ul>
+                <li><img src="{{ url_for('static', filename='image/Blue_White_Simple_Cyber_Security_Logo-removebg-preview.png') }}" alt="logo"></li>
+                <li class="left-nav"><a href="/">Home</a></li>
+                <li class="right-nav"><a href="contact.html">Contact Us</a></li>
+                <li class="FAQ"><a href="faq.html">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!-- JavaScript -->
+    <!-- Main Section: Shield image + Form in table format -->
+    <table class="w-100">
+        <tr>
+            <td class="text-center" style="padding-top: 100px;">
+                <img src="{{ url_for('static', filename='image/shield.webp') }}" alt="shield" class="shield-image">
+                <div class="input-container">
+                    <p class="h5">Stay One Step Ahead of Scammers</p><br>
+                    <form action="/" method="POST">
+                        <input type="text" name="url" class="form__input" placeholder="Enter URL" required>
+                        <button class="button mt-3">PREDICT</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+
+        {% if url %}
+        <tr>
+            <td class="text-center py-4">
+                <h6><a href="{{ url }}" target="_blank">{{ url }}</a></h6>
+                <h3 id="prediction"></h3>
+                <button class="button1 mt-2" id="button1" style="display: none;" onclick="window.open('{{ url }}')">Continue</button>
+                <button class="button2 mt-2" id="button2" style="display: none;" onclick="window.open('{{ url }}')">Still want to Continue</button>
+            </td>
+        </tr>
+        {% endif %}
+
+        <tr>
+            <td>
+                <section class="info">
+                    <div class="card">If you suspect deceit, hit delete</div>
+                    <div class="card">Think before you click</div>
+                    <div class="card">Don't take the bait</div>
+                </section>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="{{ url_for('static', filename='image/Blue_White_Simple_Cyber_Security_Logo-removebg-preview.png') }}" alt="logo">
+            </div>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="faq.html">FAQ</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+            <p class="copyright">© 2025 Phishing Detector. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Prediction Script -->
+    {% if xx is defined %}
+    <script>
+        let x = {{ xx }};
+        let percentage = (x * 100).toFixed(2);
+        const prediction = document.getElementById("prediction");
+        if (x >= 0.5) {
+            prediction.innerHTML = `<span style="color: limegreen; font-weight: bold;">This is a legitimate website</span><br>Website is ${percentage}% safe to use...`;
+            document.getElementById("button1").style.display = "inline-block";
+        } else {
+            prediction.innerHTML = `<span style="color: red; font-weight: bold;">This is a phishing website</span><br>Website is ${(100 - x * 100).toFixed(2)}% unsafe to use...`;
+            document.getElementById("button2").style.display = "inline-block";
+        }
+    </script>
+{% endif %}
+
+
+    <!-- JS Libraries -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -59,30 +118,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
-
-    
-    <script>
-        
-            let x = '{{xx}}';
-            let num = x*100;
-            if (0<=x && x<0.50){
-                num = 100-num;
-            }
-            let txtx = num.toString();
-            if(x<=1 && x>=0.50){
-                var label = "Website is "+txtx +"% safe to use...";
-                document.getElementById("prediction").innerHTML = label;
-                document.getElementById("button1").style.display="block";
-            }
-            else if (0<=x && x<0.50){
-                var label = "Website is "+txtx +"% unsafe to use..."
-                document.getElementById("prediction").innerHTML = label ;
-                document.getElementById("button2").style.display="block";
-            }
-        
-    </script>
-    
 </body>
-
 </html>
-
